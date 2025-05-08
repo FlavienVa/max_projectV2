@@ -14,17 +14,17 @@ def main():
     for i, question in enumerate(QUIZ_QUESTIONS):
         st.subheader(f"Question {i+1}: {question['question']}")
         
-        # Create radio buttons for options
+        # Use the question text as the key
         answer = st.radio(
             "Select your answer:",
             question['options'],
-            key=f"q_{i}",
+            key=f"q_{question['question']}",
             index=None
         )
         
         # Store answer in session state
         if answer:
-            st.session_state.quiz_answers[i] = answer
+            st.session_state.quiz_answers[question['question']] = answer
     
     # Navigation buttons
     with tw.container(classes="flex justify-between mt-8"):

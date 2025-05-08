@@ -1,73 +1,89 @@
 QUIZ_QUESTIONS = [
     {
-        "question": "What kind of scenery do you prefer?",
-        "options": ["Mountains", "Cities", "Countryside"],
-        "weights": {
-            "Mountains": {"Nature": 1, "Relax": 0, "City": 0},
-            "Cities": {"Nature": 0, "Relax": 0, "City": 1},
-            "Countryside": {"Nature": 0.5, "Relax": 1, "City": 0}
-        }
+        "question": "What do you crave most when you take time off?",
+        "options": [
+            "Exploring new places and local culture",
+            "Disconnecting completely and doing nothing",
+            "Being outside and moving freely"
+        ]
     },
     {
-        "question": "Who are you traveling with?",
-        "options": ["Family", "Couple", "Friends"],
-        "weights": {
-            "Family": {"Nature": 0.5, "Relax": 1, "City": 0.5},
-            "Couple": {"Nature": 0.5, "Relax": 1, "City": 0.5},
-            "Friends": {"Nature": 1, "Relax": 0.5, "City": 1}
-        }
+        "question": "What kind of sound makes you feel at ease?",
+        "options": [
+            "People chatting, footsteps, a bit of life around",
+            "Silence, water, wind",
+            "Soft music, background calm"
+        ]
     },
     {
-        "question": "What is your age group?",
-        "options": ["18-30", "30-50", "50+"],
-        "weights": {
-            "18-30": {"Nature": 1, "Relax": 0.5, "City": 1},
-            "30-50": {"Nature": 0.5, "Relax": 1, "City": 0.5},
-            "50+": {"Nature": 0.5, "Relax": 1, "City": 0.5}
-        }
+        "question": "How do you tend to move through a day when traveling?",
+        "options": [
+            "I stay active and explore the outdoors or natural surroundings",
+            "I take it slow, maybe read a book or enjoy some quiet time",
+            "I stay active and like to discover new things and places"
+        ]
     },
     {
-        "question": "Preferred travel style?",
-        "options": ["Relaxation", "Adventure", "Culture"],
-        "weights": {
-            "Relaxation": {"Nature": 0.5, "Relax": 1, "City": 0.5},
-            "Adventure": {"Nature": 1, "Relax": 0, "City": 0.5},
-            "Culture": {"Nature": 0, "Relax": 0.5, "City": 1}
-        }
+        "question": "What makes a trip feel memorable?",
+        "options": [
+            "Things I’ve never seen or tasted before",
+            "Time to pause and reset completely",
+            "Feeling connected to the landscape"
+        ]
     },
     {
-        "question": "Travel pace?",
-        "options": ["Fast-paced", "Mix of both", "Slow and immersive"],
-        "weights": {
-            "Fast-paced": {"Nature": 0.5, "Relax": 0, "City": 1},
-            "Mix of both": {"Nature": 1, "Relax": 0.5, "City": 0.5},
-            "Slow and immersive": {"Nature": 0.5, "Relax": 1, "City": 0}
-        }
+        "question": "What helps you enjoy your day most while traveling?",
+        "options": [
+            "Knowing there’s variety and new experiences ahead",
+            "Having space to relax with no pressure",
+            "Being outdoors and going where the moment takes me"
+        ]
     },
     {
-        "question": "Preferred transportation?",
-        "options": ["Hiking/VTT", "Private car", "Public transport"],
-        "weights": {
-            "Hiking/VTT": {"Nature": 1, "Relax": 0, "City": 0},
-            "Private car": {"Nature": 0.5, "Relax": 1, "City": 0.5},
-            "Public transport": {"Nature": 0, "Relax": 0.5, "City": 1}
-        }
+        "question": "How do you like to feel at the end of a trip?",
+        "options": [
+            "Energized and full of stories",
+            "Calm and refreshed",
+            "Clear-headed and physically balanced"
+        ]
     },
     {
-        "question": "Evening plans?",
-        "options": ["Camping", "Spa", "Partying"],
-        "weights": {
-            "Camping": {"Nature": 1, "Relax": 0, "City": 0},
-            "Spa": {"Nature": 0, "Relax": 1, "City": 0.5},
-            "Partying": {"Nature": 0, "Relax": 0, "City": 1}
-        }
+        "question": "What kind of view draws you in the most?",
+        "options": [
+            "A skyline or street full of movement",
+            "A wide open lake or still space",
+            "Mountains, trees, or something wild"
+        ]
     },
     {
-        "question": "When are you planning to travel?",
-        "options": ["Summer", "Winter"],
-        "weights": {
-            "Summer": {"Nature": 1, "Relax": 0.5, "City": 0.5},
-            "Winter": {"Nature": 1, "Relax": 0.5, "City": 0.5}
-        }
+        "question": "How do you spend your time in between meals or activities?",
+        "options": [
+            "Walking around, shopping, talking to locals",
+            "Reading, journaling, resting",
+            "Going for a walk, a swim, or a quick trail"
+        ]
+    },
+    {
+        "question": "What stays with you after a great trip?",
+        "options": [
+            "The energy and impressions from everything I explored",
+            "A calm feeling that lasts even after I return",
+            "A sense of connection to the places I’ve been"
+        ]
+    },
+    {
+        "question": "What makes you feel most comfortable when you’re away?",
+        "options": [
+            "Being around people and activity",
+            "Having quiet time to yourself",
+            "Being outside in nature"
+        ]
+    },
+    {
+        "question": "Are you planning a summer or winter holiday?",
+        "options": [
+            "Summer",
+            "Winter"
+        ]
     }
-] 
+]

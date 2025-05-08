@@ -2,20 +2,9 @@ import streamlit as st
 import st_tailwind as tw
 import folium
 from streamlit_folium import folium_static
-from components.quiz_questions import QUIZ_QUESTIONS
 from utils.api_client import api_client
-
-def calculate_group(answers):
-    scores = {"Nature": 0, "Relax": 0, "City": 0}
-    
-    for i, answer in answers.items():
-        question = QUIZ_QUESTIONS[i]
-        weights = question['weights'][answer]
-        for group, weight in weights.items():
-            scores[group] += weight
-    
-    # Get the group with highest score
-    return max(scores.items(), key=lambda x: x[1])[0]
+import pandas as pd
+from components.train_model import predict_holiday_type
 
 def get_itinerary(group, season):
     itineraries = {
@@ -218,52 +207,76 @@ def display_destination_info(destination_name):
         st.info("No additional information available for this destination.")
 
 def main():
-    st.title("Your Personalized Swiss Itinerary")
-    
+    st.title("🇨🇭 Your Personalized Swiss Itinerary")
+    st.markdown(
+        "<h3 style='color:#1E90FF;'>Discover your perfect Swiss adventure, tailored just for you!</h3>",
+        unsafe_allow_html=True,
+    )
+
     if 'quiz_answers' not in st.session_state:
         st.error("Please complete the quiz first!")
         if tw.button("Go to Quiz", classes="bg-blue-500 text-white px-4 py-2 rounded"):
             st.switch_page("pages/2_Quiz.py")
         return
-    
-    # Get user's answers and calculate group
+
     answers = st.session_state.quiz_answers
-    group = calculate_group(answers)
-    
-    # Get season from the last question
-    season = answers[len(QUIZ_QUESTIONS)-1]
-    
-    # Get itinerary based on group and season
-    itinerary = get_itinerary(group, season)
-    
-    # Display results
-    st.header(itinerary["title"])
-    
-    # Display the map
-    st.subheader("Your Itinerary Map")
-    map_obj = create_itinerary_map(itinerary["destinations"])
-    if map_obj:
-        folium_static(map_obj)
-    else:
-        st.info("Map data not available for all destinations.")
-    
-    # Display destinations and activities
-    for destination in itinerary["destinations"]:
-        with st.expander(f"📍 {destination['name']}"):
-            st.write("Activities:")
-            for activity in destination["activities"]:
-                st.write(f"• {activity}")
-            
-            # Add a button to show more information
+    input_data = pd.DataFrame([answers])
+
+    predicted_label, predicted_probability, class_probabilities = predict_holiday_type(input_data)
+
+    # Stylish summary card
+    st.markdown(
+        f"""
+        <div style="background: linear-gradient(90deg, #1E90FF 60%, #87CEFA 100%); 
+                    border-radius: 12px; padding: 1.5rem 2rem; color: white; margin-bottom: 1.5rem;">
+            <h2 style="margin-bottom:0.5rem;">✨ Recommended Holiday Type: <b>{predicted_label}</b></h2>
+            <p style="margin:0;">Confidence: <b>{predicted_probability:.0%}</b></p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # Class probabilities as a horizontal bar chart
+    st.markdown("#### Model Confidence for Each Holiday Type")
+    st.bar_chart(pd.DataFrame([class_probabilities]))
+
+    season = answers["Are you planning a summer or winter holiday?"]
+    itinerary = get_itinerary(predicted_label, season)
+
+    st.header(f"🗺️ {itinerary['title']}")
+
+    # Display the map in a card
+    with st.container():
+        st.markdown(
+            "<div style='background-color:#f0f8ff; border-radius:10px; padding:1rem; margin-bottom:1.5rem;'>"
+            "<h3 style='margin-top:0;'>Your Itinerary Map</h3>",
+            unsafe_allow_html=True,
+        )
+        map_obj = create_itinerary_map(itinerary["destinations"])
+        if map_obj:
+            folium_static(map_obj)
+        else:
+            st.info("Map data not available for all destinations.")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    st.subheader("Destinations & Activities")
+    for idx, destination in enumerate(itinerary["destinations"], 1):
+        with st.expander(f"**{idx}. {destination['name']}**", expanded=(idx == 1)):
+            st.markdown(
+                "<ul style='margin-bottom:1rem;'>"
+                + "".join([f"<li style='font-size:1.1em;'> {activity}</li>" for activity in destination["activities"]])
+                + "</ul>",
+                unsafe_allow_html=True,
+            )
             if st.button(f"Show more about {destination['name']}", key=f"btn_{destination['name']}"):
                 display_destination_info(destination["name"])
-    
+
     # Navigation buttons
     with tw.container(classes="flex justify-between mt-8"):
-        if tw.button("Back to Quiz", classes="bg-gray-200 text-gray-800 px-4 py-2 rounded"):
+        if tw.button("⬅️ Back to Quiz", classes="bg-gray-200 text-gray-800 px-4 py-2 rounded"):
             st.switch_page("pages/2_Quiz.py")
-        if tw.button("Back to Home", classes="bg-blue-500 text-white px-4 py-2 rounded"):
+        if tw.button("🏠 Back to Home", classes="bg-blue-500 text-white px-4 py-2 rounded"):
             st.switch_page("app.py")
 
 if __name__ == "__main__":
-    main() 
+    main()
