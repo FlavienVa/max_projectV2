@@ -3,3 +3,7 @@ st-tailwind>=0.1.0
 requests>=2.31.0
 folium>=0.14.0
 streamlit-folium>=0.10.0 
+sklearn>=1.2.2
+pandas>=2.0.3
+numpy>=1.24.4
+pillow>=10.0.0
