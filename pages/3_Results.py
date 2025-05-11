@@ -14,15 +14,21 @@ def get_itinerary(group, season):
                 "destinations": [
                     {
                         "name": "Verbier",
-                        "activities": ["Hiking the Mont Fort Trail", "Mountain Biking", "Paragliding"]
+                        "activities": ["Hiking the Mont Fort Trail", "Mountain Biking", "Paragliding"],
+                        "latitude": 46.0961,
+                        "longitude": 7.2266
                     },
                     {
                         "name": "Zermatt",
-                        "activities": ["Five Lakes Walk", "Gornergrat Railway", "Village Exploration"]
+                        "activities": ["Five Lakes Walk", "Gornergrat Railway", "Village Exploration"],
+                        "latitude": 46.0207,
+                        "longitude": 7.7491
                     },
                     {
                         "name": "Interlaken",
-                        "activities": ["Paragliding", "Lake Thun Cruise", "Hiking to Harder Kulm"]
+                        "activities": ["Paragliding", "Lake Thun Cruise", "Hiking to Harder Kulm"],
+                        "latitude": 46.6863,
+                        "longitude": 7.8632
                     }
                 ]
             },
@@ -31,15 +37,21 @@ def get_itinerary(group, season):
                 "destinations": [
                     {
                         "name": "Verbier",
-                        "activities": ["Skiing (4 Vallées)", "Snowshoeing", "Dog sledding"]
+                        "activities": ["Skiing (4 Vallées)", "Snowshoeing", "Dog sledding"],
+                        "latitude": 46.0961,
+                        "longitude": 7.2266
                     },
                     {
                         "name": "Zermatt",
-                        "activities": ["Skiing/Snowboarding", "Gornergrat Railway", "Ice Skating"]
+                        "activities": ["Skiing/Snowboarding", "Gornergrat Railway", "Ice Skating"],
+                        "latitude": 46.0207,
+                        "longitude": 7.7491
                     },
                     {
                         "name": "Interlaken",
-                        "activities": ["Sledding", "Snowshoe Tours", "Winter Kayaking"]
+                        "activities": ["Sledding", "Snowshoe Tours", "Winter Kayaking"],
+                        "latitude": 46.6863,
+                        "longitude": 7.8632
                     }
                 ]
             }
@@ -49,15 +61,21 @@ def get_itinerary(group, season):
             "destinations": [
                 {
                     "name": "Lucerne",
-                    "activities": ["Chapel Bridge", "Mount Pilatus Excursion", "Lake Lucerne Cruise"]
+                    "activities": ["Chapel Bridge", "Mount Pilatus Excursion", "Lake Lucerne Cruise"],
+                    "latitude": 47.0502,
+                    "longitude": 8.3093
                 },
                 {
                     "name": "Weggis",
-                    "activities": ["Rigi Kaltbad Thermal Baths", "Easy hiking trails", "Lakeside dining"]
+                    "activities": ["Rigi Kaltbad Thermal Baths", "Easy hiking trails", "Lakeside dining"],
+                    "latitude": 47.0331,
+                    "longitude": 8.4333
                 },
                 {
                     "name": "Vitznau",
-                    "activities": ["Mount Rigi cogwheel train", "Paddleboarding", "Outdoor concerts"]
+                    "activities": ["Mount Rigi cogwheel train", "Paddleboarding", "Outdoor concerts"],
+                    "latitude": 47.00987200738584,
+                    "longitude": 8.484811962790728
                 }
             ]
         },
@@ -66,20 +84,25 @@ def get_itinerary(group, season):
             "destinations": [
                 {
                     "name": "Geneva",
-                    "activities": ["Jet d'Eau Fountain", "Old Town Walk", "Patek Philippe Museum"]
+                    "activities": ["Jet d'Eau Fountain", "Old Town Walk", "Patek Philippe Museum"],
+                    "latitude": 46.2044,
+                    "longitude": 6.1432
                 },
                 {
                     "name": "Bern",
-                    "activities": ["Zytglogge Clock Tower", "Bear Park", "Rose Garden"]
+                    "activities": ["Zytglogge Clock Tower", "Bear Park", "Rose Garden"],
+                    "latitude": 46.9480,
+                    "longitude": 7.4474
                 },
                 {
                     "name": "Zurich",
-                    "activities": ["Altstadt", "Lake Zurich Promenade", "Kunsthaus Art Museum"]
+                    "activities": ["Altstadt", "Lake Zurich Promenade", "Kunsthaus Art Museum"],
+                    "latitude": 47.3769,
+                    "longitude": 8.5417
                 }
             ]
         }
     }
-    
     # Only Nature group has seasonal variations
     if group == "Nature":
         return itineraries[group][season]
@@ -111,12 +134,10 @@ def create_itinerary_map(destinations):
     # Get coordinates for all destinations
     locations = []
     for dest in destinations:
-        info = api_client.get_destination_info(dest['name'])
-        if info and 'geo' in info:
             locations.append({
                 'name': dest['name'],
-                'lat': info['geo'].get('latitude'),
-                'lon': info['geo'].get('longitude')
+                'lat': dest['latitude'],
+                'lon': dest['longitude']
             })
     
     if not locations:
